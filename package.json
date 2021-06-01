@@ -24,11 +24,13 @@
     "database",
     "sqlite",
     "sqlite3",
-    "better-sqlite3",
+    "Redis",
     "db",
     "MySQL",
     "MongoDB",
     "sql",
+    "PostgreSQL",
+    "LevelDB",
     "discord"
   ]
 }
