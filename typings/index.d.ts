@@ -1,5 +1,5 @@
 declare module 'dreamy-db' {
-	import {EventEmitter} from 'events';
+	import { EventEmitter } from 'events';
 
 	export type DreamyOptions = {
 		uri?: string;

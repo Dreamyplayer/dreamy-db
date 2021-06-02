@@ -56,16 +56,16 @@ $ npm install sqlite3 # SQLite
 ## Usage
 
 ```javascript
-const Dreamy = require('dreamy-db');
+const Database = require('dreamy-db');
 
 // Choose One of the following:
-const db = new Dreamy();
-const db = new Dreamy('leveldb://path/to/database');
-const db = new Dreamy('mongodb://user:pass@localhost:27017/dbname');
-const db = new Dreamy('mysql://user:pass@localhost:3306/dbname');
-const db = new Dreamy('postgresql://user:pass@localhost:5432/dbname');
-const db = new Dreamy('redis://user:pass@localhost:6379');
-const db = new Dreamy('sqlite://path/to/database.sqlite');
+const db = new Database.Dreamy();
+const db = new Database.Dreamy('leveldb://path/to/database');
+const db = new Database.Dreamy('mongodb://user:pass@localhost:27017/dbname');
+const db = new Database.Dreamy('mysql://user:pass@localhost:3306/dbname');
+const db = new Database.Dreamy('postgresql://user:pass@localhost:5432/dbname');
+const db = new Database.Dreamy('redis://user:pass@localhost:6379');
+const db = new Database.Dreamy('sqlite://path/to/database.sqlite');
 
 // Handles connection errors
 db.on('error', error => console.error('Connection Error: ', error));
@@ -83,8 +83,8 @@ await db.clear(); // undefined
 Namespaces isolate elements within the database to avoid key collisions, separate elements by prefixing the keys, and allow clearance of only one namespace while utilizing the same database.
 
 ```javascript
-const users = new Dreamy({ namespace: 'users' });
-const members = new Dreamy({ namespace: 'members' });
+const users = new Database.Dreamy({ namespace: 'users' });
+const members = new Database.Dreamy({ namespace: 'members' });
 
 await users.set('foo', 'users'); // true
 await members.set('foo', 'members'); // true
@@ -101,7 +101,7 @@ You can optionally utilize third-party storage adapters or build your own. *Drea
 
 ```javascript
 const myAdapter = require('./my-adapter');
-const dreamy = new Dreamy({ store: myAdapter });
+const dreamy = new Database.Dreamy({ store: myAdapter });
 ```
 
 For example, [`quick-lru`](https://github.com/sindresorhus/quick-lru) is an unrelated and independent module that has an API similar to that of *Dreamy*.
@@ -110,7 +110,7 @@ For example, [`quick-lru`](https://github.com/sindresorhus/quick-lru) is an unre
 const QuickLRU = require('quick-lru');
 
 const lru = new QuickLRU({ maxSize: 1000 });
-const dreamy = new Dreamy({ store: lru });
+const dreamy = new Database.Dreamy({ store: lru });
 ```
 
 ## Custom Serializers
@@ -120,7 +120,7 @@ const dreamy = new Dreamy({ store: lru });
 Optionally, pass your own data serialization methods to support extra data types.
 
 ```javascript
-const dreamy = new Dreamy({
+const dreamy = new Database.Dreamy({
     serialize: JSON.stringify,
     deserialize: JSON.parse
 });
@@ -135,7 +135,7 @@ const dreamy = new Dreamy({
 ```javascript
 class MyModule {
     constructor(options) {
-        this.db = new Dreamy({
+        this.db = new Database.Dreamy({
             uri: typeof opts.store === 'string' && opts.store,
 			store: typeof opts.store !== 'string' && opts.store
             namespace: 'mymodule'

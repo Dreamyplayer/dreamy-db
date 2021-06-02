@@ -1,6 +1,6 @@
 {
   "name": "dreamy-db",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Dreamy-db - A Powerful database for storing, accessing, and managing multiple databases.",
   "main": "./src/index.js",
   "types": "./typings/index.d.ts",
