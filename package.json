@@ -10,7 +10,7 @@
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
   },
-  "author": "Dreamy Player",
+  "author": "♔ Dяεαмү アlαүεя ♔",
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.21"
