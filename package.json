@@ -6,7 +6,11 @@
   "types": "./typings/index.d.ts",
   "scripts": {
     "test": "ava --serial",
-    "test:watch": "ava --watch"
+    "test:watch": "ava --watch",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "lint:typings": "tslint typings/index.d.ts",
+    "prettier": "prettier --write src/**/*.js typings/**/*.ts",
   },
   "author": "♔ Dяεαмү アlαүεя ♔",
   "license": "MIT",
