@@ -8,9 +8,17 @@
     "test": "ava --serial",
     "test:watch": "ava --watch",
     "lint": "eslint src",
-    "lint:fix": "eslint src --fix",
+    "lint:fix": "eslint src --fix"
   },
   "author": "♔ Dяεαмү アlαүεя ♔",
+  "bugs": {
+    "url": "https://github.com/Dreamyplayer/dreamy-db/issues"
+  },
+  "homepage": "https://dreamyplayer.gitbook.io/dreamy-db",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dreamyplayer/dreamy-db.git"
+  },
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.21"
