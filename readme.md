@@ -153,5 +153,7 @@ const myModule = new AwesomeModule({ store: thirdPartyAdapter });
 
 ## Links
 
+- **[Documentation](https://dreamyplayer.gitbook.io/dreamy-db "Documentation")**
+- **[GitHub Repo](https://github.com/Dreamyplayer/dreamy-db "GitHub Repository")**
 - **[Discord](https://discord.gg/CNAJfbs5dn "Discord")**
 - **[NPM Package](https://www.npmjs.com/package/dreamy-db "NPM Package")**
