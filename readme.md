@@ -1,5 +1,7 @@
 <h1 align="center">
-  <img src="https://cdn.discordapp.com/attachments/850689599582896128/851466602935484427/ezgif.com-gif-maker.png" />
+	<a href="https://dreamyplayer.gitbook.io/dreamy-db/">
+  <img src="https://cdn.discordapp.com/attachments/851533693657808926/851533740370690049/ezgif.com-gif-maker.png" />
+	</a>
 	Dreamy-db
 </h1>
 
@@ -57,16 +59,16 @@ $ npm install sqlite3 # SQLite
 ## Usage
 
 ```javascript
-const Database = require('dreamy-db');
+const { Dreamy } = require('dreamy-db');
 
 // Choose One of the following:
-const db = new Database.Dreamy();
-const db = new Database.Dreamy('leveldb://path/to/database');
-const db = new Database.Dreamy('mongodb://user:pass@localhost:27017/dbname');
-const db = new Database.Dreamy('mysql://user:pass@localhost:3306/dbname');
-const db = new Database.Dreamy('postgresql://user:pass@localhost:5432/dbname');
-const db = new Database.Dreamy('redis://user:pass@localhost:6379');
-const db = new Database.Dreamy('sqlite://path/to/database.sqlite');
+const db = new Dreamy();
+const db = new Dreamy('leveldb://path/to/database');
+const db = new Dreamy('mongodb://user:pass@localhost:27017/dbname');
+const db = new Dreamy('mysql://user:pass@localhost:3306/dbname');
+const db = new Dreamy('postgresql://user:pass@localhost:5432/dbname');
+const db = new Dreamy('redis://user:pass@localhost:6379');
+const db = new Dreamy('sqlite://path/to/database.sqlite');
 
 // Handles connection errors
 db.on('error', error => console.error('Connection Error: ', error));
@@ -84,8 +86,8 @@ await db.clear(); // undefined
 Namespaces isolate elements within the database to avoid key collisions, separate elements by prefixing the keys, and allow clearance of only one namespace while utilizing the same database.
 
 ```javascript
-const users = new Database.Dreamy({ namespace: 'users' });
-const members = new Database.Dreamy({ namespace: 'members' });
+const users = new Dreamy({ namespace: 'users' });
+const members = new Dreamy({ namespace: 'members' });
 
 await users.set('foo', 'users'); // true
 await members.set('foo', 'members'); // true
@@ -102,7 +104,7 @@ You can optionally utilize third-party storage adapters or build your own. *Drea
 
 ```javascript
 const myAdapter = require('./my-adapter');
-const dreamy = new Database.Dreamy({ store: myAdapter });
+const database = new Dreamy({ store: myAdapter });
 ```
 
 For example, [`quick-lru`](https://github.com/sindresorhus/quick-lru) is an unrelated and independent module that has an API similar to that of *Dreamy*.
@@ -111,7 +113,7 @@ For example, [`quick-lru`](https://github.com/sindresorhus/quick-lru) is an unre
 const QuickLRU = require('quick-lru');
 
 const lru = new QuickLRU({ maxSize: 1000 });
-const dreamy = new Database.Dreamy({ store: lru });
+const database = new Dreamy({ store: lru });
 ```
 
 ## Custom Serializers
@@ -121,7 +123,7 @@ const dreamy = new Database.Dreamy({ store: lru });
 Optionally, pass your own data serialization methods to support extra data types.
 
 ```javascript
-const dreamy = new Database.Dreamy({
+const database = new Dreamy({
     serialize: JSON.stringify,
     deserialize: JSON.parse
 });
@@ -136,7 +138,7 @@ const dreamy = new Database.Dreamy({
 ```javascript
 class MyModule {
     constructor(options) {
-        this.db = new Database.Dreamy({
+        this.db = new Dreamy({
             uri: typeof opts.store === 'string' && opts.store,
 			store: typeof opts.store !== 'string' && opts.store
             namespace: 'mymodule'
@@ -158,3 +160,9 @@ const myModule = new AwesomeModule({ store: thirdPartyAdapter });
 - **[GitHub Repo](https://github.com/Dreamyplayer/dreamy-db "GitHub Repository")**
 - **[Discord](https://discord.gg/CNAJfbs5dn "Discord")**
 - **[NPM Package](https://www.npmjs.com/package/dreamy-db "NPM Package")**
+
+<h1 align="center">
+	<a href="https://discord.gg/CNAJfbs5dn">
+  <img src="https://cdn.discordapp.com/attachments/851533693657808926/851533841049976893/Screenshot_from_2021-06-07_23-24-27.png" />
+	</a>
+</h1>
