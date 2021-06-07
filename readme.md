@@ -1,5 +1,6 @@
 <h1 align="center">
-    Dreamy-db
+  <img src="https://cdn.discordapp.com/attachments/850689599582896128/851466602935484427/ezgif.com-gif-maker.png" />
+	Dreamy-db
 </h1>
 
 ## About
