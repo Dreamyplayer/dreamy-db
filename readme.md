@@ -7,13 +7,18 @@
 
 ## About
 
- Dreamy-db - A Powerful database for storing, accessing, and managing multiple databases.
+ **Dreamy-db** - A Powerful database for storing, accessing, and managing multiple databases.\
+ **Dreamy-db** is a powerful **[node.js](https://nodejs.org/)** module that allows you to interact with the databases very easily.
+ 
+## Why?
 
-- Promise Based API
 - Object-oriented
-- Persistent storage
-- Configurable
+- Feature-rich
 - Performant
+- Configurable
+- 100% Promise-based
+- Speedy and efficient
+- Persistent storage
 
 ## Features
 
@@ -41,7 +46,16 @@ $ npm install dreamy-db
 $ yarn add dreamy-db
 ```
 
-By default, data is cached in memory. Optionally, install and utilize a "storage adapter". Officially supported adapters are LevelDB, MongoDB, NeDB, MySQL, PostgreSQL, Redis, and SQLite.
+By default, data is cached in memory. Optionally, install and utilize a "storage adapter". 
+
+## Officially supported adapters are 
+- LevelDB 
+- MongoDB
+- NeDB
+- MySQL
+- PostgreSQL
+- Redis
+- SQLite.
 
 ```bash
 $ npm install level # LevelDB
@@ -74,7 +88,9 @@ const db = new Dreamy('sqlite://path/to/database.sqlite');
 db.on('error', error => console.error('Connection Error: ', error));
 
 await db.set('foo', 'bar'); // true
+await db.find(data => data === 'bar'); // { key: 'foo', value: 'bar' }
 await db.get('foo'); // 'bar'
+await db.math('dreamy', 'add', 200); // true
 await db.has('foo'); // true
 await db.all(); // [ { key: 'foo', value: 'bar' } ]
 await db.delete('foo'); // true
@@ -129,7 +145,9 @@ const database = new Dreamy({
 });
 ```
 
-**Warning**: Using custom serializers means you lose any guarantee of data consistency.
+| :warning: warning    | Using custom serializers means you lose any guarantee of data consistency. |
+|----------------------|:---------------------------------------------------------------------------|
+
 
 ## Embeddable
 
@@ -157,6 +175,7 @@ const myModule = new AwesomeModule({ store: thirdPartyAdapter });
 ## Links
 
 - **[Documentation](https://dreamyplayer.gitbook.io/dreamy-db "Documentation")**
+- **[Examples](https://dreamyplayer.gitbook.io/dreamy-db/api/examples "Examples")**
 - **[GitHub Repo](https://github.com/Dreamyplayer/dreamy-db "GitHub Repository")**
 - **[Discord](https://discord.gg/CNAJfbs5dn "Discord")**
 - **[NPM Package](https://www.npmjs.com/package/dreamy-db "NPM Package")**
