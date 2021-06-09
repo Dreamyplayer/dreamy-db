@@ -1,31 +1,31 @@
-"use strict";
+'use strict';
 
-const EventEmitter = require("events");
-const { removeKeyPrefix, safeRequire } = require("../util");
-const sql = safeRequire("sql");
+const EventEmitter = require('events');
+const {removeKeyPrefix, safeRequire} = require('../util');
+const sql = safeRequire('sql');
 
 module.exports = class SQL extends EventEmitter {
   constructor(options = {}) {
     super();
     this.options = Object.assign(
       {
-        table: "dreamy",
+        table: 'dreamy',
         keySize: 255,
       },
-      options
+      options,
     );
     this.sql = new sql.Sql(this.options.dialect);
     this.entry = this.sql.define({
       name: this.options.table,
       columns: [
         {
-          name: "key",
+          name: 'key',
           primaryKey: true,
           dataType: `VARCHAR(${Number(this.options.keySize)})`,
         },
         {
-          name: "value",
-          dataType: "TEXT",
+          name: 'value',
+          dataType: 'TEXT',
         },
       ],
     });
@@ -33,12 +33,12 @@ module.exports = class SQL extends EventEmitter {
     const connection = this.options
       .connect()
       .then((query) => query(table).then(() => query))
-      .catch((error) => this.emit("error", error));
+      .catch((error) => this.emit('error', error));
     this.query = (sqlString) => connection.then((query) => query(sqlString));
   }
 
   all() {
-    return this.query(this.entry.select("*").toString()).then((rows) => {
+    return this.query(this.entry.select('*').toString()).then((rows) => {
       const array = [];
       for (const i in rows) {
         array.push({
@@ -59,8 +59,8 @@ module.exports = class SQL extends EventEmitter {
   }
 
   delete(key) {
-    const select = this.entry.select().where({ key }).toString();
-    const del = this.entry.delete().where({ key }).toString();
+    const select = this.entry.select().where({key}).toString();
+    const del = this.entry.delete().where({key}).toString();
     return this.query(select).then((rows) => {
       const row = rows[0];
       if (row === undefined) return false;
@@ -69,7 +69,7 @@ module.exports = class SQL extends EventEmitter {
   }
 
   get(key) {
-    const select = this.entry.select().where({ key }).toString();
+    const select = this.entry.select().where({key}).toString();
     return this.query(select).then((rows) => {
       const row = rows[0];
       if (row === undefined) return undefined;
@@ -79,20 +79,20 @@ module.exports = class SQL extends EventEmitter {
 
   set(key, value) {
     let upsert;
-    if (this.options.dialect === "mysql") {
-      value = value.replace(/\\/g, "\\\\");
+    if (this.options.dialect === 'mysql') {
+      value = value.replace(/\\/g, '\\\\');
     }
 
-    if (this.options.dialect === "postgres") {
+    if (this.options.dialect === 'postgres') {
       upsert = this.entry
-        .insert({ key, value })
+        .insert({key, value})
         .onConflict({
-          columns: ["key"],
-          update: ["value"],
+          columns: ['key'],
+          update: ['value'],
         })
         .toString();
     } else {
-      upsert = this.entry.replace({ key, value }).toString();
+      upsert = this.entry.replace({key, value}).toString();
     }
 
     return this.query(upsert);

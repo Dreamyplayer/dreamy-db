@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
-const EventEmitter = require("events");
-const { safeRequire } = require("../util");
-const Ioredis = safeRequire("ioredis");
+const EventEmitter = require('events');
+const {safeRequire} = require('../util');
+const Ioredis = safeRequire('ioredis');
 
 module.exports = class Redis extends EventEmitter {
   constructor(options = {}) {
@@ -10,23 +10,23 @@ module.exports = class Redis extends EventEmitter {
     this.options = Object.assign({}, options);
     const client = new Ioredis(this.options.uri, this.options);
     this.db = [
-      "get",
-      "keys",
-      "set",
-      "sadd",
-      "del",
-      "srem",
-      "smembers",
-      "end",
+      'get',
+      'keys',
+      'set',
+      'sadd',
+      'del',
+      'srem',
+      'smembers',
+      'end',
     ].reduce((object, method) => {
-      object[method] = require("util").promisify(client[method].bind(client));
+      object[method] = require('util').promisify(client[method].bind(client));
       return object;
     }, {});
-    client.on("error", (error) => this.emit("error", error));
+    client.on('error', (error) => this.emit('error', error));
   }
 
   all() {
-    return this.db.keys("*").then((data) => {
+    return this.db.keys('*').then((data) => {
       for (const element of data) {
         if (element === null) return undefined;
         return element;

@@ -1,11 +1,11 @@
-"use strict";
+'use strict';
 
-const EventEmitter = require("events");
-const Util = require("./util");
-const _get = require("lodash/get");
-const _has = require("lodash/has");
-const _set = require("lodash/set");
-const _unset = require("lodash/unset");
+const EventEmitter = require('events');
+const Util = require('./util');
+const _get = require('lodash/get');
+const _has = require('lodash/has');
+const _set = require('lodash/set');
+const _unset = require('lodash/unset');
 
 /**
  * Dreamy-db - A Powerful database for storing, accessing, and managing multiple databases.
@@ -38,11 +38,11 @@ class Dreamy extends EventEmitter {
      */
     this.options = Object.assign(
       {
-        namespace: "dreamy",
+        namespace: 'dreamy',
         serialize: Util.stringify,
         deserialize: Util.parse,
       },
-      typeof options === "string" ? { uri: options } : options
+      typeof options === 'string' ? {uri: options} : options,
     );
     Util.validateOptions(this.options);
 
@@ -50,8 +50,8 @@ class Dreamy extends EventEmitter {
       this.options.store = Util.load(Object.assign({}, this.options));
     }
 
-    if (typeof this.options.store.on === "function") {
-      this.options.store.on("error", (error) => this.emit("error", error));
+    if (typeof this.options.store.on === 'function') {
+      this.options.store.on('error', (error) => this.emit('error', error));
     }
   }
 
@@ -98,8 +98,8 @@ class Dreamy extends EventEmitter {
    * await <db>.delete(['foo', 'fizz']); // [ true, false ]
    */
   delete(key) {
-    if (typeof key !== "string") {
-      throw new TypeError("Key must be a string");
+    if (typeof key !== 'string') {
+      throw new TypeError('Key must be a string');
     }
 
     key = Util.addKeyPrefix(key, this.options.namespace);
@@ -129,12 +129,12 @@ class Dreamy extends EventEmitter {
    */
   async ensure(key, value = null, path = null) {
     if (value === null) {
-      throw new TypeError("Dreamy#ensure: Value must be provided.");
+      throw new TypeError('Dreamy#ensure: Value must be provided.');
     }
 
     const exists = await this.has(key);
     if (path !== null) {
-      if (!exists) throw new Error("Dreamy#ensure: Key does not exist.");
+      if (!exists) throw new Error('Dreamy#ensure: Key does not exist.');
       if (!(await this.has(key, path))) {
         const value = await this.get(key, value);
         return value;
@@ -155,7 +155,7 @@ class Dreamy extends EventEmitter {
 
   async entries() {
     const elements = await this.all();
-    return elements.map(({ key, value }) => [key, value]);
+    return elements.map(({key, value}) => [key, value]);
   }
 
   /**
@@ -181,12 +181,12 @@ class Dreamy extends EventEmitter {
    * await <db>.find(v => v.desc === 'desc'); // undefined
    */
   async find(fn, thisArg) {
-    if (typeof thisArg !== "undefined") {
+    if (typeof thisArg !== 'undefined') {
       fn = fn.bind(thisArg);
     }
 
     const data = await this.all();
-    for (const { key, value } of data) {
+    for (const {key, value} of data) {
       if (fn(value, key)) {
         return value;
       }
@@ -208,15 +208,15 @@ class Dreamy extends EventEmitter {
    * await <db>.get('profile', 'verified'); // false
    */
   get(key, path = null) {
-    if (typeof key !== "string") {
-      throw new TypeError("Dreamy#get: Key must be a string.");
+    if (typeof key !== 'string') {
+      throw new TypeError('Dreamy#get: Key must be a string.');
     }
 
     key = Util.addKeyPrefix(key, this.options.namespace);
     return Promise.resolve()
       .then(() => this.options.store.get(key))
       .then((data) =>
-        typeof data === "string" ? this.options.deserialize(data) : data
+        typeof data === 'string' ? this.options.deserialize(data) : data,
       )
       .then((data) => (path === null ? data : _get(data, path)))
       .then((data) => (data === undefined ? undefined : data));
@@ -229,8 +229,8 @@ class Dreamy extends EventEmitter {
    * @return {Promise<boolean>} `true` if the element exists in the database, otherwise `false`.
    */
   async has(key, path = null) {
-    if (typeof key !== "string") {
-      throw new TypeError("Dreamy#has: Key must be a string");
+    if (typeof key !== 'string') {
+      throw new TypeError('Dreamy#has: Key must be a string');
     }
 
     if (path !== null) {
@@ -252,7 +252,7 @@ class Dreamy extends EventEmitter {
    */
   async keys() {
     const elements = await this.all();
-    return elements.map(({ key }) => key);
+    return elements.map(({key}) => key);
   }
 
   /**
@@ -271,18 +271,18 @@ class Dreamy extends EventEmitter {
     const data = await this.get(key);
     if (path !== null) {
       const propValue = _get(data, path);
-      if (typeof propValue !== "number")
-        throw new TypeError("The first operand must be a number.");
+      if (typeof propValue !== 'number')
+        throw new TypeError('The first operand must be a number.');
       const result = await this.set(
         key,
         Util.math(propValue, operation, operand),
-        path
+        path,
       );
       return result;
     }
 
-    if (typeof data !== "number")
-      throw new TypeError("The first operand must be a number.");
+    if (typeof data !== 'number')
+      throw new TypeError('The first operand must be a number.');
     const result = await this.set(key, Util.math(data, operation, operand));
     return result;
   }
@@ -304,7 +304,7 @@ class Dreamy extends EventEmitter {
    */
   static multi(names, options = {}) {
     if (!Array.isArray(names) || names.length === 0) {
-      throw new TypeError("Names must be an array of strings.");
+      throw new TypeError('Names must be an array of strings.');
     }
 
     const instances = {};
@@ -328,14 +328,14 @@ class Dreamy extends EventEmitter {
     if (path !== null) {
       const propValue = _get(data, path);
       if (!Array.isArray(propValue)) {
-        throw new TypeError("Target must be an array.");
+        throw new TypeError('Target must be an array.');
       }
 
       if (!allowDuplicates && propValue.includes(value)) return value;
       propValue.push(value);
       _set(data, path, propValue);
     } else {
-      if (!Array.isArray(data)) throw new TypeError("Target must be an array.");
+      if (!Array.isArray(data)) throw new TypeError('Target must be an array.');
       if (!allowDuplicates && data.includes(value)) return value;
       data.push(value);
     }
@@ -359,14 +359,14 @@ class Dreamy extends EventEmitter {
       if (Array.isArray(propValue)) {
         propValue.splice(propValue.indexOf(value), 1);
         _set(data, path, propValue);
-      } else if (typeof data === "object") {
+      } else if (typeof data === 'object') {
         _unset(data, `${path}.${value}`);
       }
     } else if (Array.isArray(data)) {
       if (data.includes(value)) {
         data.splice(data.indexOf(value), 1);
       }
-    } else if (data !== null && typeof data === "object") {
+    } else if (data !== null && typeof data === 'object') {
       delete data[value];
     }
 
@@ -396,18 +396,18 @@ class Dreamy extends EventEmitter {
    * await <db>.set('profile', 100, 'balance');
    */
   set(key, value, path = null) {
-    if (typeof key !== "string") {
-      throw new TypeError("Dreamy#set: Key must be a string.");
+    if (typeof key !== 'string') {
+      throw new TypeError('Dreamy#set: Key must be a string.');
     }
 
     key = Util.addKeyPrefix(key, this.options.namespace);
     if (path !== null) {
       const data = this.options.store.get(key);
       value = _set(
-        (typeof data === "string" ? this.options.deserialize(data) : data) ||
+        (typeof data === 'string' ? this.options.deserialize(data) : data) ||
           {},
         path,
-        value
+        value,
       );
     }
 
@@ -423,10 +423,10 @@ class Dreamy extends EventEmitter {
    */
   async values() {
     const elements = await this.all();
-    return elements.map(({ value }) => value);
+    return elements.map(({value}) => value);
   }
 }
 
 module.exports = Dreamy;
 module.exports.Dreamy = Dreamy;
-module.exports.Util = require("./util");
+module.exports.Util = require('./util');

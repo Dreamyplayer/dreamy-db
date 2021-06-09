@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 /**
  * General utility methods for Dreamy.
@@ -6,7 +6,7 @@
 class Util {
   constructor() {
     throw new Error(
-      `The ${this.constructor.name} class may not be instantiated.`
+      `The ${this.constructor.name} class may not be instantiated.`,
     );
   }
 
@@ -34,9 +34,9 @@ class Util {
   static isBufferLike(value) {
     return (
       value !== null &&
-      typeof value === "object" &&
-      value.type === "Buffer" &&
-      (Array.isArray(value.data) || typeof value.data === "string")
+      typeof value === 'object' &&
+      value.type === 'Buffer' &&
+      (Array.isArray(value.data) || typeof value.data === 'string')
     );
   }
 
@@ -47,17 +47,17 @@ class Util {
    */
   static load(options) {
     const adapters = {
-      level: "./adapters/leveldb",
-      leveldb: "./adapters/leveldb",
-      mongo: "./adapters/mongodb",
-      mongodb: "./adapters/mongodb",
-      mysql: "./adapters/mysql",
-      mysql2: "./adapters/mysql",
-      postgres: "./adapters/postgres",
-      postgresql: "./adapters/postgres",
-      redis: "./adapters/redis",
-      sqlite: "./adapters/sqlite",
-      sqlite3: "./adapters/sqlite",
+      level: './adapters/leveldb',
+      leveldb: './adapters/leveldb',
+      mongo: './adapters/mongodb',
+      mongodb: './adapters/mongodb',
+      mysql: './adapters/mysql',
+      mysql2: './adapters/mysql',
+      postgres: './adapters/postgres',
+      postgresql: './adapters/postgres',
+      redis: './adapters/redis',
+      sqlite: './adapters/sqlite',
+      sqlite3: './adapters/sqlite',
     };
     if (options.adapter || options.uri) {
       const adapter = options.adapter || /^[^:]*/.exec(options.uri)[0];
@@ -82,9 +82,9 @@ class Util {
           return Buffer.from(value.data);
         }
 
-        if (typeof value.data === "string") {
-          if (value.data.startsWith("base64:")) {
-            return Buffer.from(value.data.slice("base64:".length), "base64");
+        if (typeof value.data === 'string') {
+          if (value.data.startsWith('base64:')) {
+            return Buffer.from(value.data.slice('base64:'.length), 'base64');
           }
 
           return Buffer.from(value.data);
@@ -105,29 +105,29 @@ class Util {
    */
   static math(firstOperand, operation, secondOperand) {
     switch (operation) {
-      case "add":
-      case "addition":
-      case "+":
+      case 'add':
+      case 'addition':
+      case '+':
         return firstOperand + secondOperand;
-      case "sub":
-      case "subtract":
-      case "-":
+      case 'sub':
+      case 'subtract':
+      case '-':
         return firstOperand - secondOperand;
-      case "mult":
-      case "multiply":
-      case "*":
+      case 'mult':
+      case 'multiply':
+      case '*':
         return firstOperand * secondOperand;
-      case "div":
-      case "divide":
-      case "/":
+      case 'div':
+      case 'divide':
+      case '/':
         return firstOperand / secondOperand;
-      case "exp":
-      case "exponent":
-      case "^":
+      case 'exp':
+      case 'exponent':
+      case '^':
         return firstOperand ** secondOperand;
-      case "mod":
-      case "modulo":
-      case "%":
+      case 'mod':
+      case 'modulo':
+      case '%':
         return firstOperand % secondOperand;
       default:
         return undefined;
@@ -142,7 +142,7 @@ class Util {
    * @return {string}
    */
   static removeKeyPrefix(key, namespace) {
-    return key.replace(`${namespace}:`, "");
+    return key.replace(`${namespace}:`, '');
   }
 
   /**
@@ -156,7 +156,7 @@ class Util {
       return require(id);
     } catch (_) {
       throw new Error(
-        `Install ${id} to continue; run "npm i ${id}" to install.`
+        `Install ${id} to continue; run "npm i ${id}" to install.`,
       );
     }
   }
@@ -176,17 +176,17 @@ class Util {
           if (Array.isArray(value.data)) {
             if (value.data.length > 0) {
               value.data = `base64:${Buffer.from(value.data).toString(
-                "base64"
+                'base64',
               )}`;
             } else {
-              value.data = "";
+              value.data = '';
             }
           }
         }
 
         return value;
       },
-      space
+      space,
     );
   }
 
@@ -196,31 +196,31 @@ class Util {
    * @return {undefined}
    */
   static validateOptions(options) {
-    if (options.uri && typeof options.uri !== "string") {
+    if (options.uri && typeof options.uri !== 'string') {
       throw new TypeError('The option "uri" must be a string.');
     }
 
-    if (options.namespace && typeof options.namespace !== "string") {
+    if (options.namespace && typeof options.namespace !== 'string') {
       throw new TypeError('The option "namespace" must be a string.');
     }
 
-    if (options.adapter && typeof options.adapter !== "string") {
+    if (options.adapter && typeof options.adapter !== 'string') {
       throw new TypeError('The option "adapter" must be a string.');
     }
 
-    if (options.serialize && typeof options.serialize !== "function") {
+    if (options.serialize && typeof options.serialize !== 'function') {
       throw new TypeError('The option "serialize" must be a function.');
     }
 
-    if (options.deserialize && typeof options.deserialize !== "function") {
+    if (options.deserialize && typeof options.deserialize !== 'function') {
       throw new TypeError('The option "deserialize" must be a function');
     }
 
-    if (options.collection && typeof options.collection !== "string") {
+    if (options.collection && typeof options.collection !== 'string') {
       throw new TypeError('The option "collection" must be a string.');
     }
 
-    if (options.table && typeof options.table !== "string") {
+    if (options.table && typeof options.table !== 'string') {
       throw new TypeError('The option "table" must be a string.');
     }
   }

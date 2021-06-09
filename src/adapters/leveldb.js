@@ -1,41 +1,41 @@
-"use strict";
+'use strict';
 
-const EventEmitter = require("events");
-const { safeRequire } = require("../util");
-const Level = safeRequire("level");
+const EventEmitter = require('events');
+const {safeRequire} = require('../util');
+const Level = safeRequire('level');
 
 module.exports = class LevelDB extends EventEmitter {
   constructor(options = {}) {
     super();
     options = Object.assign(
       {
-        uri: "leveldb://db",
+        uri: 'leveldb://db',
       },
-      options
+      options,
     );
     const client = new Level(
-      options.uri.replace(/^leveldb:\/\//, ""),
+      options.uri.replace(/^leveldb:\/\//, ''),
       options,
       (error) => {
-        if (error) this.emit("error", error);
-      }
+        if (error) this.emit('error', error);
+      },
     );
     this.db = [
-      "del",
-      "createKeyStream",
-      "createReadStream",
-      "get",
-      "put",
-      "close",
+      'del',
+      'createKeyStream',
+      'createReadStream',
+      'get',
+      'put',
+      'close',
     ].reduce((object, method) => {
-      object[method] = require("util").promisify(client[method].bind(client));
+      object[method] = require('util').promisify(client[method].bind(client));
       return object;
     }, {});
   }
 
   all() {
     return this.db.createReadStream().then((stream) => {
-      stream.on("data", (data) => {
+      stream.on('data', (data) => {
         return data;
       });
     });
@@ -43,7 +43,7 @@ module.exports = class LevelDB extends EventEmitter {
 
   clear() {
     return this.db.createKeyStream().then((stream) => {
-      stream.on("data", async (data) => {
+      stream.on('data', async(data) => {
         await this.db.del(data);
       });
       return undefined;
