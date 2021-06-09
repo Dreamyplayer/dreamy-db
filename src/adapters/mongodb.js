@@ -18,7 +18,7 @@ module.exports = class MongoDB extends EventEmitter {
     this.client = mongojs(this.options.url);
     const collection = this.client.collection(this.options.collection);
     collection.createIndex(
-      {key: 1},
+      { key: 1 },
       {
         unique: true,
         background: true,
@@ -65,6 +65,6 @@ module.exports = class MongoDB extends EventEmitter {
   }
 
   set(key, value) {
-    return this.db.update({key}, {$set: {key, value}}, {upsert: true});
+    return this.db.update({ key }, { $set: { key, value } }, { upsert: true });
   }
 };

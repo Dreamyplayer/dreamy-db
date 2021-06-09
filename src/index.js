@@ -155,7 +155,7 @@ class Dreamy extends EventEmitter {
 
   async entries() {
     const elements = await this.all();
-    return elements.map(({key, value}) => [key, value]);
+    return elements.map(({ key, value }) => [key, value]);
   }
 
   /**
@@ -186,7 +186,7 @@ class Dreamy extends EventEmitter {
     }
 
     const data = await this.all();
-    for (const {key, value} of data) {
+    for (const { key, value } of data) {
       if (fn(value, key)) {
         return value;
       }
@@ -250,7 +250,7 @@ class Dreamy extends EventEmitter {
    */
   async keys() {
     const elements = await this.all();
-    return elements.map(({key}) => key);
+    return elements.map(({ key }) => key);
   }
 
   /**
@@ -410,7 +410,7 @@ class Dreamy extends EventEmitter {
    */
   async values() {
     const elements = await this.all();
-    return elements.map(({value}) => value);
+    return elements.map(({ value }) => value);
   }
 }
 

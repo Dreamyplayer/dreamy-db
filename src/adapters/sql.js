@@ -83,14 +83,14 @@ module.exports = class SQL extends EventEmitter {
 
     if (this.options.dialect === 'postgres') {
       upsert = this.entry
-        .insert({key, value})
+        .insert({ key, value })
         .onConflict({
           columns: ['key'],
           update: ['value'],
         })
         .toString();
     } else {
-      upsert = this.entry.replace({key, value}).toString();
+      upsert = this.entry.replace({ key, value }).toString();
     }
 
     return this.query(upsert);
