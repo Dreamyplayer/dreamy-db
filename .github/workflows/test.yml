@@ -15,10 +15,13 @@ jobs:
 
       - name: Install dependencies
         run: yarn
+        
+      - name: Run EsLint
+        run: yarn run eslint --init
 
       - name: Run ESLint
         run: yarn run eslint . --ext .js,.jsx,.ts,.tsx
-
+        
   typings:
     name: TSLint
     runs-on: ubuntu-latest
