@@ -14,10 +14,10 @@ jobs:
           node-version: 14
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn
 
       - name: Run ESLint
-        run: yarn run lint
+        run: eslint . --ext .js,.jsx,.ts,.tsx
 
   typings:
     name: TSLint
@@ -32,7 +32,7 @@ jobs:
           node-version: 14
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn
 
       - name: Run TSLint
         run: yarn run lint:typings
@@ -50,7 +50,7 @@ jobs:
           node-version: 14
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn
 
       - name: Register Problem Matcher
         run: echo "##[add-matcher].github/tsc.json"
