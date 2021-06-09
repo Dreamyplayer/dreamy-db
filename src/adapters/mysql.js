@@ -1,6 +1,10 @@
 'use strict';
 
+<<<<<<< Updated upstream
 const {safeRequire} = require('../util');
+=======
+const { safeRequire } = require('../util');
+>>>>>>> Stashed changes
 const mysql = safeRequire('mysql2/promise');
 const Sql = require('./Sql');
 
@@ -16,8 +20,8 @@ module.exports = class MySQL extends Sql {
     options.connect = () =>
       Promise.resolve()
         .then(() => mysql.createConnection(options.uri))
-        .then((connection) => {
-          return (sql) => connection.execute(sql).then((data) => data[0]);
+        .then(connection => {
+          return sql => connection.execute(sql).then(data => data[0]);
         });
     super(options);
   }

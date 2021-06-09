@@ -1,6 +1,10 @@
 'use strict';
 
+<<<<<<< Updated upstream
 const {safeRequire} = require('../util');
+=======
+const { safeRequire } = require('../util');
+>>>>>>> Stashed changes
 const pg = safeRequire('pg');
 const Sql = require('./Sql');
 
@@ -18,7 +22,7 @@ module.exports = class PostgreSQL extends Sql {
         const client = new pg.Pool({
           connectionString: options.uri,
         });
-        return (sql) => client.query(sql).then((data) => data.rows);
+        return sql => client.query(sql).then(data => data.rows);
       });
     super(options);
   }

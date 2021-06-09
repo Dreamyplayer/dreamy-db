@@ -42,7 +42,11 @@ class Dreamy extends EventEmitter {
         serialize: Util.stringify,
         deserialize: Util.parse,
       },
+<<<<<<< Updated upstream
       typeof options === 'string' ? {uri: options} : options,
+=======
+      typeof options === 'string' ? { uri: options } : options,
+>>>>>>> Stashed changes
     );
     Util.validateOptions(this.options);
 
@@ -51,7 +55,11 @@ class Dreamy extends EventEmitter {
     }
 
     if (typeof this.options.store.on === 'function') {
+<<<<<<< Updated upstream
       this.options.store.on('error', (error) => this.emit('error', error));
+=======
+      this.options.store.on('error', error => this.emit('error', error));
+>>>>>>> Stashed changes
     }
   }
 
@@ -76,7 +84,7 @@ class Dreamy extends EventEmitter {
 
         return this.options.store.all();
       })
-      .then((data) => (data === undefined ? undefined : data));
+      .then(data => (data === undefined ? undefined : data));
   }
 
   /**
@@ -105,7 +113,7 @@ class Dreamy extends EventEmitter {
     key = Util.addKeyPrefix(key, this.options.namespace);
     return Promise.resolve().then(() => {
       if (Array.isArray(key)) {
-        return Promise.all(key.map((k) => this.options.store.delete(k)));
+        return Promise.all(key.map(k => this.options.store.delete(k)));
       }
 
       return this.options.store.delete(key);
@@ -215,11 +223,17 @@ class Dreamy extends EventEmitter {
     key = Util.addKeyPrefix(key, this.options.namespace);
     return Promise.resolve()
       .then(() => this.options.store.get(key))
+<<<<<<< Updated upstream
       .then((data) =>
         typeof data === 'string' ? this.options.deserialize(data) : data,
       )
       .then((data) => (path === null ? data : _get(data, path)))
       .then((data) => (data === undefined ? undefined : data));
+=======
+      .then(data => (typeof data === 'string' ? this.options.deserialize(data) : data))
+      .then(data => (path === null ? data : _get(data, path)))
+      .then(data => (data === undefined ? undefined : data));
+>>>>>>> Stashed changes
   }
 
   /**
@@ -271,6 +285,7 @@ class Dreamy extends EventEmitter {
     const data = await this.get(key);
     if (path !== null) {
       const propValue = _get(data, path);
+<<<<<<< Updated upstream
       if (typeof propValue !== 'number')
         throw new TypeError('The first operand must be a number.');
       const result = await this.set(
@@ -283,6 +298,14 @@ class Dreamy extends EventEmitter {
 
     if (typeof data !== 'number')
       throw new TypeError('The first operand must be a number.');
+=======
+      if (typeof propValue !== 'number') throw new TypeError('The first operand must be a number.');
+      const result = await this.set(key, Util.math(propValue, operation, operand), path);
+      return result;
+    }
+
+    if (typeof data !== 'number') throw new TypeError('The first operand must be a number.');
+>>>>>>> Stashed changes
     const result = await this.set(key, Util.math(data, operation, operand));
     return result;
   }
@@ -403,17 +426,21 @@ class Dreamy extends EventEmitter {
     key = Util.addKeyPrefix(key, this.options.namespace);
     if (path !== null) {
       const data = this.options.store.get(key);
+<<<<<<< Updated upstream
       value = _set(
         (typeof data === 'string' ? this.options.deserialize(data) : data) ||
           {},
         path,
         value,
       );
+=======
+      value = _set((typeof data === 'string' ? this.options.deserialize(data) : data) || {}, path, value);
+>>>>>>> Stashed changes
     }
 
     return Promise.resolve()
       .then(() => this.options.serialize(value))
-      .then((value) => this.options.store.set(key, value))
+      .then(value => this.options.store.set(key, value))
       .then(() => true);
   }
 

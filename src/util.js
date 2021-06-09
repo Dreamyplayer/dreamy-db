@@ -5,9 +5,13 @@
  */
 class Util {
   constructor() {
+<<<<<<< Updated upstream
     throw new Error(
       `The ${this.constructor.name} class may not be instantiated.`,
     );
+=======
+    throw new Error(`The ${this.constructor.name} class may not be instantiated.`);
+>>>>>>> Stashed changes
   }
 
   /**
@@ -19,7 +23,7 @@ class Util {
    */
   static addKeyPrefix(key, namespace) {
     if (Array.isArray(key)) {
-      return key.map((k) => `${namespace}:${k}`);
+      return key.map(k => `${namespace}:${k}`);
     }
 
     return `${namespace}:${key}`;
@@ -155,9 +159,13 @@ class Util {
     try {
       return require(id);
     } catch (_) {
+<<<<<<< Updated upstream
       throw new Error(
         `Install ${id} to continue; run "npm i ${id}" to install.`,
       );
+=======
+      throw new Error(`Install ${id} to continue; run "npm i ${id}" to install.`);
+>>>>>>> Stashed changes
     }
   }
 
@@ -175,9 +183,13 @@ class Util {
         if (Util.isBufferLike(value)) {
           if (Array.isArray(value.data)) {
             if (value.data.length > 0) {
+<<<<<<< Updated upstream
               value.data = `base64:${Buffer.from(value.data).toString(
                 'base64',
               )}`;
+=======
+              value.data = `base64:${Buffer.from(value.data).toString('base64')}`;
+>>>>>>> Stashed changes
             } else {
               value.data = '';
             }
