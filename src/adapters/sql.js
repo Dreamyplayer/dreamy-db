@@ -1,11 +1,7 @@
 'use strict';
 
 const EventEmitter = require('events');
-<<<<<<< Updated upstream
-const {removeKeyPrefix, safeRequire} = require('../util');
-=======
 const { removeKeyPrefix, safeRequire } = require('../util');
->>>>>>> Stashed changes
 const sql = safeRequire('sql');
 
 module.exports = class SQL extends EventEmitter {
@@ -36,15 +32,6 @@ module.exports = class SQL extends EventEmitter {
     const table = this.entry.create().ifNotExists().toString();
     const connection = this.options
       .connect()
-<<<<<<< Updated upstream
-      .then((query) => query(table).then(() => query))
-      .catch((error) => this.emit('error', error));
-    this.query = (sqlString) => connection.then((query) => query(sqlString));
-  }
-
-  all() {
-    return this.query(this.entry.select('*').toString()).then((rows) => {
-=======
       .then(query => query(table).then(() => query))
       .catch(error => this.emit('error', error));
     this.query = sqlString => connection.then(query => query(sqlString));
@@ -52,7 +39,6 @@ module.exports = class SQL extends EventEmitter {
 
   all() {
     return this.query(this.entry.select('*').toString()).then(rows => {
->>>>>>> Stashed changes
       const array = [];
       for (const i in rows) {
         array.push({
@@ -71,15 +57,9 @@ module.exports = class SQL extends EventEmitter {
   }
 
   delete(key) {
-<<<<<<< Updated upstream
-    const select = this.entry.select().where({key}).toString();
-    const del = this.entry.delete().where({key}).toString();
-    return this.query(select).then((rows) => {
-=======
     const select = this.entry.select().where({ key }).toString();
     const del = this.entry.delete().where({ key }).toString();
     return this.query(select).then(rows => {
->>>>>>> Stashed changes
       const row = rows[0];
       if (row === undefined) return false;
       return this.query(del).then(() => true);
@@ -87,13 +67,8 @@ module.exports = class SQL extends EventEmitter {
   }
 
   get(key) {
-<<<<<<< Updated upstream
-    const select = this.entry.select().where({key}).toString();
-    return this.query(select).then((rows) => {
-=======
     const select = this.entry.select().where({ key }).toString();
     return this.query(select).then(rows => {
->>>>>>> Stashed changes
       const row = rows[0];
       if (row === undefined) return undefined;
       return row === undefined ? undefined : row.value;

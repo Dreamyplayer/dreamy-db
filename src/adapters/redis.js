@@ -1,11 +1,7 @@
 'use strict';
 
 const EventEmitter = require('events');
-<<<<<<< Updated upstream
-const {safeRequire} = require('../util');
-=======
 const { safeRequire } = require('../util');
->>>>>>> Stashed changes
 const Ioredis = safeRequire('ioredis');
 
 module.exports = class Redis extends EventEmitter {
@@ -13,26 +9,6 @@ module.exports = class Redis extends EventEmitter {
     super();
     this.options = Object.assign({}, options);
     const client = new Ioredis(this.options.uri, this.options);
-<<<<<<< Updated upstream
-    this.db = [
-      'get',
-      'keys',
-      'set',
-      'sadd',
-      'del',
-      'srem',
-      'smembers',
-      'end',
-    ].reduce((object, method) => {
-      object[method] = require('util').promisify(client[method].bind(client));
-      return object;
-    }, {});
-    client.on('error', (error) => this.emit('error', error));
-  }
-
-  all() {
-    return this.db.keys('*').then((data) => {
-=======
     this.db = ['get', 'keys', 'set', 'sadd', 'del', 'srem', 'smembers', 'end'].reduce((object, method) => {
       object[method] = require('util').promisify(client[method].bind(client));
       return object;
@@ -42,7 +18,6 @@ module.exports = class Redis extends EventEmitter {
 
   all() {
     return this.db.keys('*').then(data => {
->>>>>>> Stashed changes
       for (const element of data) {
         if (element === null) return undefined;
         return element;

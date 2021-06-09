@@ -1,10 +1,6 @@
 'use strict';
 
-<<<<<<< Updated upstream
-const {safeRequire} = require('../util');
-=======
 const { safeRequire } = require('../util');
->>>>>>> Stashed changes
 const pg = safeRequire('pg');
 const Sql = require('./Sql');
 

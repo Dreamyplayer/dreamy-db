@@ -3,10 +3,6 @@
     "printWidth": 120,
     "trailingComma": "all",
     "endOfLine": "lf",
-<<<<<<< Updated upstream
-    "arrowParens": "avoid"
-  }
-=======
     "arrowParens": "avoid",
         "strict": ["error", "global"],
         "no-await-in-loop": "warn",
@@ -152,4 +148,3 @@
         "yield-star-spacing": "error"
 
 }
->>>>>>> Stashed changes

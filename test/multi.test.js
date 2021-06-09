@@ -3,11 +3,7 @@
 const test = require('ava');
 const Dreamy = require('../src');
 
-<<<<<<< Updated upstream
-test.serial('Multiple Dreamy instances', async(t) => {
-=======
 test.serial('Multiple Dreamy instances', async t => {
->>>>>>> Stashed changes
   const dreamy = Dreamy.multi(['members', 'users']);
   t.is(await dreamy.members.set('foo', 'bar'), true);
   t.is(await dreamy.users.set('bar', 'foo'), true);

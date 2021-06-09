@@ -1,21 +1,10 @@
 {
-<<<<<<< Updated upstream
-    "extends": "strongloop",
-=======
     "extends": ["strongloop", "plugin:prettier/recommended"],
     "plugins": ["import"],
->>>>>>> Stashed changes
     "parserOptions": {
         "ecmaVersion": 2020
     },
     "rules": {
-<<<<<<< Updated upstream
-        "max-len": [2, 160, 8]
-      },
-    "env": {
-        "es6": true
-    }
-=======
         "max-len": [2, 160, 8],
         "prettier/prettier": "error"
       },
@@ -24,5 +13,4 @@
         "node": true
     }
 
->>>>>>> Stashed changes
 }
