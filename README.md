@@ -1,7 +1,18 @@
 <h1 align="center">
 	<a href="https://dreamyplayer.gitbook.io/dreamy-db/">
-  <img src="https://cdn.discordapp.com/attachments/851533693657808926/851533740370690049/ezgif.com-gif-maker.png" />
+  <img src="https://cdn.discordapp.com/attachments/851533693657808926/851533740370690049/ezgif.com-gif-maker.png" alt="dreamy-db"/>
 	</a>
+  <p>
+    <a href="https://discord.gg/CNAJfbs5dn"><img src="https://img.shields.io/discord/849280500421492736?color=5865F2&logo=discord&logoColor=white" alt="Discord server" /></a>
+    <a href="https://www.npmjs.com/package/dreamy-db"><img src="https://img.shields.io/npm/v/dreamy-db?style=plastic?maxAge=3600" alt="NPM version" /></a>
+    <a href="https://www.npmjs.com/package/dreamy-db"><img src="https://img.shields.io/npm/dt/dreamy-db?style=plastic?maxAge=3600" alt="NPM downloads" /></a>
+    <a href="https://github.com/Dreamyplayer/dreamy-db/actions"><img src="https://github.com/Dreamyplayer/dreamy-db/actions/workflows/test.yml/badge.svg" alt="Build status" /></a>
+    <a href="https://david-dm.org/Dreamyplayer/dreamy-db.svg"><img src="https://img.shields.io/david/Dreamyplayer/dreamy-db?style=plastic?maxAge=3600" alt="Dependencies" /></a>
+    <a href="https://github.com/Dreamyplayer/dreamy-db/stargazers"><img src="https://img.shields.io/github/stars/Dreamyplayer/dreamy-db?style=social" alt="Patreon" /></a>
+  </p>
+  <p>
+    <a href="https://nodei.co/npm/dreamy-db/"><img src="https://nodei.co/npm/dreamy-db.png?downloads=true&downloadRank=true&stars=true" alt="npm installnfo" /></a>
+  </p>
 	Dreamy-db
 </h1>
 
@@ -9,7 +20,7 @@
 
  **Dreamy-db** - A Powerful database for storing, accessing, and managing multiple databases.\
  **Dreamy-db** is a powerful **[node.js](https://nodejs.org/)** module that allows you to interact with the databases very easily.
- 
+
 ## Why?
 
 - Object-oriented
@@ -46,10 +57,10 @@ $ npm install dreamy-db
 $ yarn add dreamy-db
 ```
 
-By default, data is cached in memory. Optionally, install and utilize a "storage adapter". 
+By default, data is cached in memory. Optionally, install and utilize a "storage adapter".
 
-## Officially supported adapters are 
-- LevelDB 
+## Officially supported adapters are
+- LevelDB
 - MongoDB
 - NeDB
 - MySQL
