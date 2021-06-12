@@ -59,32 +59,30 @@ class Dreamy extends EventEmitter {
    * Gets all the elements from the database.
    * @return {Promise<any[]|undefined>} All the elements in the database.
    */
-  all() {
-    return Promise.resolve()
-      .then(() => {
-        if (this.options.store instanceof Map) {
-          const data = [];
-          for (const [key, value] of this.options.store) {
-            data.push({
-              key: Util.removeKeyPrefix(key, this.options.namespace),
-              value: this.options.deserialize(value),
-            });
-          }
+  async all() {
+    await Promise.resolve();
+    if (this.options.store instanceof Map) {
+      const data = [];
+      for (const [key, value_1] of this.options.store) {
+        data.push({
+          key: Util.removeKeyPrefix(key, this.options.namespace),
+          value: this.options.deserialize(value_1),
+        });
+      }
 
-          return data;
-        }
-
-        return this.options.store.all();
-      })
-      .then(data => (data === undefined ? undefined : data));
+      return data;
+    }
+    const data_1 = this.options.store.all();
+    return data_1 === undefined ? undefined : data_1;
   }
 
   /**
    * Clears all elements from the database.
    * @return {Promise<undefined>} Returns `undefined`.
    */
-  clear() {
-    return Promise.resolve().then(() => this.options.store.clear());
+  async clear() {
+    await Promise.resolve();
+    return this.options.store.clear();
   }
 
   /**
@@ -97,19 +95,17 @@ class Dreamy extends EventEmitter {
    * await <db>.delete('foo'); // true
    * await <db>.delete(['foo', 'fizz']); // [ true, false ]
    */
-  delete(key) {
+  async delete(key) {
     if (typeof key !== 'string') {
       throw new TypeError('Key must be a string');
     }
 
     key = Util.addKeyPrefix(key, this.options.namespace);
-    return Promise.resolve().then(() => {
-      if (Array.isArray(key)) {
-        return Promise.all(key.map(k => this.options.store.delete(k)));
-      }
-
-      return this.options.store.delete(key);
-    });
+    await Promise.resolve();
+    if (Array.isArray(key)) {
+      return Promise.all(key.map(k => this.options.store.delete(k)));
+    }
+    return this.options.store.delete(key);
   }
 
   /**
@@ -207,17 +203,17 @@ class Dreamy extends EventEmitter {
    * // Using path feature
    * await <db>.get('profile', 'verified'); // false
    */
-  get(key, path = null) {
+  async get(key, path = null) {
     if (typeof key !== 'string') {
       throw new TypeError('Dreamy#get: Key must be a string.');
     }
 
     key = Util.addKeyPrefix(key, this.options.namespace);
-    return Promise.resolve()
-      .then(() => this.options.store.get(key))
-      .then(data => (typeof data === 'string' ? this.options.deserialize(data) : data))
-      .then(data => (path === null ? data : _get(data, path)))
-      .then(data => (data === undefined ? undefined : data));
+    await Promise.resolve();
+    const data = this.options.store.get(key);
+    const data_1 = typeof data === 'string' ? this.options.deserialize(data) : data;
+    const data_2 = path === null ? data_1 : _get(data_1, path);
+    return data_2 === undefined ? undefined : data_2;
   }
 
   /**
@@ -387,7 +383,7 @@ class Dreamy extends EventEmitter {
    * await <db>.set('profile', false, 'verified');
    * await <db>.set('profile', 100, 'balance');
    */
-  set(key, value, path = null) {
+  async set(key, value, path = null) {
     if (typeof key !== 'string') {
       throw new TypeError('Dreamy#set: Key must be a string.');
     }
@@ -398,7 +394,7 @@ class Dreamy extends EventEmitter {
       value = _set((typeof data === 'string' ? this.options.deserialize(data) : data) || {}, path, value);
     }
 
-    return Promise.resolve()
+    return await Promise.resolve()
       .then(() => this.options.serialize(value))
       .then(value => this.options.store.set(key, value))
       .then(() => true);

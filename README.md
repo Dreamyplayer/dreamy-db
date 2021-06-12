@@ -62,7 +62,6 @@ By default, data is cached in memory. Optionally, install and utilize a "storage
 ## Officially supported adapters are
 - LevelDB
 - MongoDB
-- NeDB
 - MySQL
 - PostgreSQL
 - Redis

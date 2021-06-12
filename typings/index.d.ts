@@ -1,12 +1,14 @@
 declare module 'dreamy-db' {
   import { EventEmitter } from 'events';
 
+  type LiteralUnion<T extends U, U = string> = T | (U & {});
+
   export type DreamyOptions = {
-    uri?: string;
+    uri?: LiteralUnion<'leveldb://' | 'mongodb://' | 'mysql://' | 'postgres://' | 'redis://' | 'sqlite://'>;
     namespace?: string;
     serialize?: () => any;
     deserialize?: () => any;
-    adapter?: string;
+    adapter?: LiteralUnion<'leveldb' | 'mongodb' | 'mysql' | 'postgres' | 'redis' | 'sqlite'>;
     store?: any;
     collection?: string;
     table?: string;
@@ -31,7 +33,12 @@ declare module 'dreamy-db' {
     public get(key: string, path?: string): Promise<any | undefined>;
     public has(key: string): Promise<boolean>;
     public keys(): Promise<string[]>;
-    public math(key: string, operation: string, operand: number, path?: string): Promise<true>;
+    public math(
+      key: string,
+      operation: LiteralUnion<'add' | 'subtract' | 'multiply' | 'divide' | 'exponent' | 'modulo'>,
+      operand: number,
+      path?: string,
+    ): Promise<true>;
 
     public push(key: string, value: any, path?: string, allowDuplicates?: boolean): Promise<any>;
 
