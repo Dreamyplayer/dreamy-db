@@ -1,6 +1,6 @@
 <h1 align="center">
 	<a href="https://dreamyplayer.gitbook.io/dreamy-db/">
-  <img src="https://cdn.discordapp.com/attachments/851533693657808926/851533740370690049/ezgif.com-gif-maker.png" alt="dreamy-db"/>
+  <img src="https://cdn.discordapp.com/attachments/851533693657808926/852172703431262228/ezgif.com-gif-maker_prev_ui.png" alt="dreamy-db"/>
 	</a>
   <p>
     <a href="https://discord.gg/CNAJfbs5dn"><img src="https://img.shields.io/discord/849280500421492736?color=5865F2&logo=discord&logoColor=white" alt="Discord server" /></a>
@@ -62,6 +62,7 @@ By default, data is cached in memory. Optionally, install and utilize a "storage
 ## Officially supported adapters are
 - LevelDB
 - MongoDB
+- NeDB
 - MySQL
 - PostgreSQL
 - Redis
