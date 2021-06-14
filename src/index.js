@@ -391,7 +391,7 @@ class Dreamy extends EventEmitter {
     key = Util.addKeyPrefix(key, this.options.namespace);
     if (path !== null) {
       const data = this.options.store.get(key);
-      value = Util.set(typeof data === 'string' ? this.options.deserialize(data) : data || {}, path, value);
+      value = _set((typeof data === 'string' ? this.options.deserialize(data) : data) || {}, path, value);
     }
 
     return Promise.resolve()
