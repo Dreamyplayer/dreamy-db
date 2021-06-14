@@ -157,6 +157,18 @@ class Util {
     }
   }
 
+  static set(object, path, value) {
+    if ({ object } !== object) return object;
+    if (!Array.isArray(path)) path = path.toString().match(/[^.[\]]+/g) || [];
+    path.slice(0, -1).reduce(
+      (a, c, i) =>
+        // eslint-disable-next-line no-new-object
+        new Object(a[c]) === a[c] ? a[c] : (a[c] = Math.abs(path[i + 1]) >> 0 === Number(path[i + 1]) ? [] : {}),
+      object,
+    )[path[path.length - 1]] = value;
+    return object;
+  }
+
   /**
    * Converts a JavaScript object or value to a JSON string.
    * @static

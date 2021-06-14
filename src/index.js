@@ -383,7 +383,7 @@ class Dreamy extends EventEmitter {
    * await <db>.set('profile', false, 'verified');
    * await <db>.set('profile', 100, 'balance');
    */
-  async set(key, value, path = null) {
+  set(key, value, path = null) {
     if (typeof key !== 'string') {
       throw new TypeError('Dreamy#set: Key must be a string.');
     }
@@ -391,10 +391,10 @@ class Dreamy extends EventEmitter {
     key = Util.addKeyPrefix(key, this.options.namespace);
     if (path !== null) {
       const data = this.options.store.get(key);
-      value = _set((typeof data === 'string' ? this.options.deserialize(data) : data) || {}, path, value);
+      value = Util.set(typeof data === 'string' ? this.options.deserialize(data) : data || {}, path, value);
     }
 
-    return await Promise.resolve()
+    return Promise.resolve()
       .then(() => this.options.serialize(value))
       .then(value => this.options.store.set(key, value))
       .then(() => true);
