@@ -7,7 +7,7 @@
     <a href="https://www.npmjs.com/package/dreamy-db"><img src="https://img.shields.io/npm/v/dreamy-db?style=plastic?maxAge=3600" alt="NPM version" /></a>
     <a href="https://www.npmjs.com/package/dreamy-db"><img src="https://img.shields.io/npm/dt/dreamy-db?style=plastic?maxAge=3600" alt="NPM downloads" /></a>
     <a href="https://github.com/Dreamyplayer/dreamy-db/actions"><img src="https://github.com/Dreamyplayer/dreamy-db/actions/workflows/test.yml/badge.svg" alt="Build status" /></a>
-    <a href="https://david-dm.org/Dreamyplayer/dreamy-db.svg"><img src="https://david-dm.org/Dreamyplayer/dreamy-db.svg?maxAge=3600" alt="Dependencies" /></a>
+    <a href="https://travis-ci.com/Dreamyplayer/dreamy-db.svg?branch=master"><img src="https://travis-ci.com/Dreamyplayer/dreamy-db.svg?branch=master" alt="Dependencies" /></a>
     <a href="https://github.com/Dreamyplayer/dreamy-db/stargazers"><img src="https://img.shields.io/github/stars/Dreamyplayer/dreamy-db?style=social" alt="Patreon" /></a>
   </p>
   <p>
