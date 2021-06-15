@@ -23,3 +23,7 @@ test/
 .github/
 .gitattributes
 .gitignore
+
+# Files
+example.js
+CONTRIBUTING.md
