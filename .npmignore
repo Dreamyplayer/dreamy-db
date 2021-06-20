@@ -26,4 +26,6 @@ test/
 
 # Files
 example.js
+README.old.md
 CONTRIBUTING.md
+/app

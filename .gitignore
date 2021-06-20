@@ -8,6 +8,8 @@ yarn-error.log*
 # test
 app.js
 examples.js
+README.old.md
+app/
 
 # yarn
 yarn.lock
