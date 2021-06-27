@@ -1,6 +1,7 @@
 'use strict';
 
 const EventEmitter = require('events');
+const { parse, stringify } = require('buffer-json');
 const Util = require('./util');
 const _get = require('lodash/get');
 const _has = require('lodash/has');
@@ -39,8 +40,8 @@ class Dreamy extends EventEmitter {
     this.options = Object.assign(
       {
         namespace: 'dreamy',
-        serialize: Util.stringify,
-        deserialize: Util.parse,
+        serialize: stringify,
+        deserialize: parse,
       },
       typeof options === 'string' ? { uri: options } : options,
     );
@@ -59,32 +60,37 @@ class Dreamy extends EventEmitter {
    * Gets all the elements from the database.
    * @return {Promise<any[]|undefined>} All the elements in the database.
    */
-  all() {
-    return Promise.resolve()
-      .then(() => {
-        if (this.options.store instanceof Map) {
-          const data = [];
-          for (const [key, value] of this.options.store) {
-            data.push({
-              key: Util.removeKeyPrefix(key, this.options.namespace),
-              value: this.options.deserialize(value),
-            });
-          }
+  async all() {
+    const { store, deserialize } = this.options;
+    const elements = [];
+    if (store instanceof Map) {
+      for (const [key, value] of store.entries()) {
+        elements.push({
+          key: Util.removeKeyPrefix(key, this.options.namespace),
+          value: typeof value === 'string' ? deserialize(value) : value,
+        });
+      }
 
-          return data;
-        }
+      return elements;
+    }
 
-        return this.options.store.all();
-      })
-      .then(data => (data === undefined ? undefined : data));
+    const data = (await store.all()) !== null;
+    for (const { key, value } of data) {
+      elements.push({
+        key: Util.removeKeyPrefix(key, this.options.namespace),
+        value: typeof value === 'string' ? deserialize(value) : value,
+      });
+    }
+
+    return elements;
   }
 
   /**
    * Clears all elements from the database.
    * @return {Promise<undefined>} Returns `undefined`.
    */
-  clear() {
-    return Promise.resolve().then(() => this.options.store.clear());
+  async clear() {
+    return this.options.store.clear();
   }
 
   /**
@@ -97,19 +103,21 @@ class Dreamy extends EventEmitter {
    * await <db>.delete('foo'); // true
    * await <db>.delete(['foo', 'fizz']); // [ true, false ]
    */
-  delete(key) {
+  async delete(key, path) {
     if (typeof key !== 'string') {
       throw new TypeError('Key must be a string');
     }
 
-    key = Util.addKeyPrefix(key, this.options.namespace);
-    return Promise.resolve().then(() => {
-      if (Array.isArray(key)) {
-        return Promise.all(key.map(k => this.options.store.delete(k)));
-      }
+    if (typeof path !== 'undefined') {
+      const data = (await this.get(key)) || {};
+      _unset(data, path);
+      const result = await this.set(key, data);
+      return result;
+    }
 
-      return this.options.store.delete(key);
-    });
+    const { store } = this.options;
+    const keyPrefix = Util.addKeyPrefix(key, this.options.namespace);
+    return store.delete(keyPrefix);
   }
 
   /**
@@ -207,17 +215,17 @@ class Dreamy extends EventEmitter {
    * // Using path feature
    * await <db>.get('profile', 'verified'); // false
    */
-  get(key, path = null) {
+  async get(key, path) {
     if (typeof key !== 'string') {
       throw new TypeError('Dreamy#get: Key must be a string.');
     }
-
-    key = Util.addKeyPrefix(key, this.options.namespace);
-    return Promise.resolve()
-      .then(() => this.options.store.get(key))
-      .then(data => (typeof data === 'string' ? this.options.deserialize(data) : data))
-      .then(data => (path === null ? data : _get(data, path)))
-      .then(data => (data === undefined ? undefined : data));
+    const { store, deserialize } = this.options;
+    const keyPrefix = Util.addKeyPrefix(key, this.options.namespace);
+    const serialized = await store.get(keyPrefix);
+    const deserialized = typeof serialized === 'string' ? deserialize(serialized) : serialized;
+    if (deserialized === undefined) return undefined;
+    if (typeof path !== 'undefined') return _get(deserialized, path);
+    return deserialized;
   }
 
   /**
@@ -232,16 +240,14 @@ class Dreamy extends EventEmitter {
     }
 
     if (path !== null) {
-      const data = await this.get(key);
+      const data = (await this.get(key)) || {};
       return _has(data, path);
     }
 
-    key = Util.addKeyPrefix(key, this.options.namespace);
-    if (this.options.store instanceof Map) {
-      return this.options.store.has(key);
-    }
-
-    return Boolean(await this.get(key));
+    const { store } = this.options;
+    const keyPrefix = Util.addKeyPrefix(key, this.options.namespace);
+    const exists = await store.has(keyPrefix);
+    return exists;
   }
 
   /**
@@ -387,21 +393,21 @@ class Dreamy extends EventEmitter {
    * await <db>.set('profile', false, 'verified');
    * await <db>.set('profile', 100, 'balance');
    */
-  set(key, value, path = null) {
+  async set(key, value, path = null) {
+    const { store, serialize } = this.options;
     if (typeof key !== 'string') {
       throw new TypeError('Dreamy#set: Key must be a string.');
     }
 
-    key = Util.addKeyPrefix(key, this.options.namespace);
     if (path !== null) {
-      const data = this.options.store.get(key);
-      value = _set((typeof data === 'string' ? this.options.deserialize(data) : data) || {}, path, value);
+      const data = (await this.get(key)) || {};
+      value = _set(data, path, value);
     }
 
-    return Promise.resolve()
-      .then(() => this.options.serialize(value))
-      .then(value => this.options.store.set(key, value))
-      .then(() => true);
+    const keyPrefix = Util.addKeyPrefix(key, this.options.namespace);
+    const serialized = serialize(value);
+    await store.set(keyPrefix, serialized);
+    return true;
   }
 
   /**

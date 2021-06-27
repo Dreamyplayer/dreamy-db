@@ -11,7 +11,7 @@
     <a href="https://github.com/Dreamyplayer/dreamy-db/stargazers"><img src="https://img.shields.io/github/stars/Dreamyplayer/dreamy-db?style=social" alt="Patreon" /></a>
   </p>
   <p>
-    <a href="https://nodei.co/npm/dreamy-db/"><img src="https://nodei.co/npm/dreamy-db.png?downloads=true&downloadRank=true&stars=true" alt="npm installnfo" /></a>
+    <!-- <a href="https://nodei.co/npm/dreamy-db/"><img src="https://nodei.co/npm/dreamy-db.png?downloads=true&downloadRank=true&stars=true" alt="npm installnfo" /></a> -->
   </p>
 	Dreamy-db
 </h1>
@@ -43,9 +43,9 @@
 
 ## Officially supported adapters
 > By default, data is cached in memory. Optionally, install and utilize a "storage adapter".
-- LevelDB
+<!-- - LevelDB -->
+<!-- - NeDB -->
 - MongoDB
-- NeDB
 - MySQL
 - PostgreSQL
 - Redis
@@ -55,29 +55,37 @@
 
 **Node.js 12.x or newer is required.**
 
-#### Using npm:
+#### Install dreamy-db using [yarn](https://classic.yarnpkg.com/en/package/dreamy-db):
 
 ```bash
-$ npm install dreamy-db
+yarn add dreamy-db
 ```
 
-#### Using yarn:
+#### Or [npm](https://www.npmjs.com/package/dreamy-db):
 
 ```bash
-$ yarn add dreamy-db
+yarn add dreamy-db
 ```
 ---
+#### Create an instance of dreamy-db once you've installed dreamy-db and any necessary drivers.
 
-## Usage
 ```js
 const { Dreamy } = require('dreamy-db');
 
-const db = new Dreamy({
-  uri: `ADD PATH TO DATABASE FILE OR SERVER`,
-});
-
-db.on('error', error => console.error('Connection Error: ', error));
-
+// One of the following
+const db = new Dreamy(); // for in-memory storage
+const db = new Dreamy('redis://user:pass@localhost:6379');
+const db = new Dreamy('mongodb://user:pass@localhost:27017/dbname');
+const db = new Dreamy('sqlite://path/to/database.sqlite');
+const db = new Dreamy('postgresql://user:pass@localhost:5432/dbname');
+const db = new Dreamy('mysql://user:pass@localhost:3306/dbname');
+```
+#### Make sure to handle connection errors.
+```js
+db.on('error', error => console.error('Dreamy#Connection Error: ', error));
+```
+## Usage
+```js
 (async () => {
   await db
     .set('Profile', {

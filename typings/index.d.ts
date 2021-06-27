@@ -27,7 +27,7 @@ declare module 'dreamy-db' {
 
     public all(): Promise<Element[] | undefined>;
     public clear(): Promise<undefined>;
-    public delete(key: string | string[]): Promise<boolean | boolean[]>;
+    public delete(key: string | string[], path: string): Promise<boolean | boolean[]>;
     public ensure(key: string, value: any): Promise<any | undefined>;
     public find(fn: () => any, thisArg?: any): Promise<Element | undefined>;
     public get(key: string, path?: string): Promise<any | undefined>;

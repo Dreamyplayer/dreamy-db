@@ -68,32 +68,6 @@ class Util {
   }
 
   /**
-   * Parses a JSON string, constructing the JavaScript value or object described by the string.
-   * @static
-   * @param {string} text The string to parse as JSON.
-   * @return {Object} The `Object` corresponding to the given JSON text.
-   */
-  static parse(text) {
-    return JSON.parse(text, (_key, value) => {
-      if (Util.isBufferLike(value)) {
-        if (Array.isArray(value.data)) {
-          return Buffer.from(value.data);
-        }
-
-        if (typeof value.data === 'string') {
-          if (value.data.startsWith('base64:')) {
-            return Buffer.from(value.data.slice('base64:'.length), 'base64');
-          }
-
-          return Buffer.from(value.data);
-        }
-      }
-
-      return value;
-    });
-  }
-
-  /**
    * Performs a mathematical operation.
    * @static
    * @param {number} firstOperand The left-hand operand.
@@ -155,33 +129,6 @@ class Util {
     } catch (_) {
       throw new Error(`Install ${id} to continue; run "npm i ${id}" to install.`);
     }
-  }
-
-  /**
-   * Converts a JavaScript object or value to a JSON string.
-   * @static
-   * @param {*} value The value to convert to a JSON string.
-   * @param {string|number} [space] A `String` or `Number` object that's used to insert white space into the output JSON string for readability purposes.
-   * @return {string} A JSON string representing the given value.
-   */
-  static stringify(value, space) {
-    return JSON.stringify(
-      value,
-      (_key, value) => {
-        if (Util.isBufferLike(value)) {
-          if (Array.isArray(value.data)) {
-            if (value.data.length > 0) {
-              value.data = `base64:${Buffer.from(value.data).toString('base64')}`;
-            } else {
-              value.data = '';
-            }
-          }
-        }
-
-        return value;
-      },
-      space,
-    );
   }
 
   /**
