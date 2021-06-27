@@ -8,7 +8,8 @@
     <a href="https://www.npmjs.com/package/dreamy-db"><img src="https://img.shields.io/npm/dt/dreamy-db?style=plastic?maxAge=3600" alt="NPM downloads" /></a>
     <a href="https://github.com/Dreamyplayer/dreamy-db/actions"><img src="https://github.com/Dreamyplayer/dreamy-db/actions/workflows/test.yml/badge.svg" alt="Build status" /></a>
     <a href="https://travis-ci.com/Dreamyplayer/dreamy-db.svg?branch=master"><img src="https://travis-ci.com/Dreamyplayer/dreamy-db.svg?branch=master" alt="Dependencies" /></a>
-    <a href="https://github.com/Dreamyplayer/dreamy-db/stargazers"><img src="https://img.shields.io/github/stars/Dreamyplayer/dreamy-db?style=social" alt="Patreon" /></a>
+     <a href="https://github.com/Dreamyplayer/dreamy-db/stargazers"><img src="https://img.shields.io/github/stars/Dreamyplayer/dreamy-db?style=social" alt="Patreon" /></a>
+    <a href="https://paypal.me/DreamyPlayer"><img src="https://img.shields.io/badge/donate-paypal-blue"></a>
   </p>
   <p>
     <!-- <a href="https://nodei.co/npm/dreamy-db/"><img src="https://nodei.co/npm/dreamy-db.png?downloads=true&downloadRank=true&stars=true" alt="npm installnfo" /></a> -->
